@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rock Paper Scissors</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"></script>
+    </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">Rock Paper Scissors</h1>
+      <div class="row justify-content-center my-5">
+        <div class="col-12 col-md-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Choose your weapon:</h5>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary playerSelection" data-selection="rock">Rock</button>
+                <button type="button" class="btn btn-primary playerSelection" data-selection="paper">Paper</button>
+                <button type="button" class="btn btn-primary playerSelection" data-selection="scissors">Scissors</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Computer's Weapon:</h5>
+              <p class="card-text computerSelection"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center my-5">
+        <div class="col-12 col-md-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Result:</h5>
+              <p class="card-text result"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+ // Define options for the game -->
+const options = ['rock', 'paper', 'scissors'];
+
+ // Function to generate a random option -->
+function computerPlay() {
+  return options[Math.floor(Math.random() * options.length)];
+}
+
+ // Function to play a round of the game -->
+function playRound(playerSelection, computerSelection) {
+   // Make the inputs case insensitive -->
+  playerSelection = playerSelection.toLowerCase();
+  computerSelection = computerSelection.toLowerCase();
+
+  if (playerSelection === computerSelection) {
+    return "It's a tie!";
+  } else if (
+    (playerSelection === 'rock' && computerSelection === 'scissors') ||
+    (playerSelection === 'paper' && computerSelection === 'rock') ||
+    (playerSelection === 'scissors' && computerSelection === 'paper')
+  ) {
+    return `You win! ${playerSelection} beats ${computerSelection}.`;
+  } else {
+    return `You lose! ${computerSelection} beats ${playerSelection}.`;
+  }
+}
+
+ // Play a game of five rounds -->
+function game() {
+  let playerScore = 0;
+  let computerScore = 0;
+
+  for (let i = 0; i < 5; i++) {
+    const playerSelection = prompt('Choose rock, paper, or scissors:');
+    const computerSelection = computerPlay();
+    const result = playRound(playerSelection, computerSelection);
+    console.log(result);
+
+    if (result.includes('win')) {
+      playerScore++;
+    } else if (result.includes('lose')) {
+      computerScore++;
+    }
+  }
+
+  if (playerScore > computerScore) {
+    console.log(`You win the game! Final score: ${playerScore}-${computerScore}`);
+  } else if (computerScore > playerScore) {
+    console.log(`You lose the game! Final score: ${computerScore}-${playerScore}`);
+  } else {
+    console.log(`It's a tie! Final score: ${playerScore}-${computerScore}`);
+  }
+}
+
+ // Play the game -->
+game();
